@@ -6,6 +6,8 @@ This ESLint plugin provides a rule to enforce import boundaries in a project. It
 
 In an import path, a private name (starting with an underscore) cannot follow a public name. You can have multiple public or private names in a row, and you can use the '..' syntax freely. Violation of these rules leads to an ESLint error.
 
+These same rules apply to exports, so if a file would not be able to import from a path, it cannot export from that path either.
+
 ### Examples
 
 Assuming our project structure is as follows:
@@ -14,7 +16,7 @@ Assuming our project structure is as follows:
 src
 │
 └─── toolbar
-│   │   index.ts (Exports specific components meant to be used across boundaries)
+│   │   index.ts (Exports specific things meant to be used across boundaries)
 │   │
 │   └─── _components
 │   │   └─── Toolbar.tsx
@@ -28,7 +30,7 @@ src
 │       └─── ...
 │
 └─── core
-    │   index.ts (Exports specific utilities meant to be used across boundaries)
+    │   index.ts (Exports specific things meant to be used across boundaries)
 │   │
 │   └─── _components
 │   │   └─── Button.tsx
@@ -93,15 +95,30 @@ src
 // we make Modal available to other components in the core area
 export { Modal } from "./_private/Modal"
 
-// Then, in src/core/index.ts, we make the Modal component available outside the core area
-export { Modal } from "./_components/Modal";
+// Then we can import the Modal component from anywhere in the core area,
+// for example from other core components
+✅ import { Modal } from "../Modal";
 
-// Then we can import the Modal component from anywhere
-✅ import { Modal } from "../../../core";
+// We cannot import Modal from outside the core folder
+❌ import { Modal } from "../core/_components/Modal";
 
 // We cannot import the Overlay component from outside the Modal folder
 ❌ import { Overlay } from "../core/_components/Modal/_private/Overlay";
+
+// If we wanted to make Modal public, we could either:
+
+// Move it to a public folder like src/core/components/Modal,
+// and then import it from anywhere:
+✅ import { Modal } from "../../core/components/Modal";
+
+// Or, export it from src/core/index.ts:
+export { Modal } from "./_components/Modal";
+
+// And then we could import Modal from anywhere
+✅ import { Modal } from "../../../core";
 ```
+
+Nesting private folders is optional and depends on the overall structure and needs of your project.
 
 ## Installation
 
