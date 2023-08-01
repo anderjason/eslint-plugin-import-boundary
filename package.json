@@ -1,6 +1,6 @@
 {
   "name": "@anderjason/eslint-plugin-import-boundary",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "An ESLint plugin to enforce import boundaries. Disallows the use of private (underscore-prefixed) directory names following a public directory name in an import path.",
   "main": "index.js",
   "scripts": {
