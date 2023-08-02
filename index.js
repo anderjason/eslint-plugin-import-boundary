@@ -30,7 +30,10 @@ module.exports = {
       create(context) {
         return {
           ImportDeclaration(node) {
-            const importPath = node.source.value;
+            const importPath = node.source?.value;
+            if (!importPath) {
+              return;
+            }
 
             const result = validate(importPath);
             if (result) {
@@ -43,7 +46,10 @@ module.exports = {
             }
           },
           ExportNamedDeclaration(node) {
-            const exportPath = node.source.value;
+            const exportPath = node.source?.value;
+            if (!exportPath) {
+              return;
+            }
 
             const result = validate(exportPath);
             if (result) {
@@ -56,7 +62,10 @@ module.exports = {
             }
           },
           ExportAllDeclaration(node) {
-            const exportPath = node.source.value;
+            const exportPath = node.source?.value;
+            if (!exportPath) {
+              return;
+            }
 
             const result = validate(exportPath);
             if (result) {

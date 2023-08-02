@@ -29,6 +29,8 @@ ruleTester.run("no-cross-boundary-imports", rule, {
     { code: `export * from '../../core'` },
     { code: `export * from '../../_components/icons/ToolbarIcon'` },
     { code: `export * from '../../_components/icons/other/ToolbarIcon'` },
+    { code: `export const x = 5` },
+    { code: `export default function() {}` },
   ],
   invalid: [
     {

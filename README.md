@@ -41,7 +41,6 @@ src
 │       └─── useKeyboardShortcut.ts
 │       └─── useSomePrivateHook.ts
 │       └─── ...
-
 ```
 
 ```javascript
@@ -88,24 +87,24 @@ src
 │   │   │   │   └─── modalHelpers.ts
 │   │   │   │   └─── ...
 
-// In this example, we want the Modal component
-// to be public, but not Overlay or modalHelpers.
+// In this example, we want other components to be able to import
+// Modal, but not be able to import Overlay or modalHelpers.
 
-// in src/core/_components/Modal/index.ts,
-// we make Modal available to other components in the core area
+// In src/core/_components/Modal/index.ts,
+// we make Modal available to other components in the core area:
 export { Modal } from "./_private/Modal"
 
 // Then we can import the Modal component from anywhere in the core area,
-// for example from other core components
+// for example from other core components:
 ✅ import { Modal } from "../Modal";
 
-// We cannot import Modal from outside the core folder
+// We cannot currently import Modal from outside the core folder:
 ❌ import { Modal } from "../core/_components/Modal";
 
 // We cannot import the Overlay component from outside the Modal folder
 ❌ import { Overlay } from "../core/_components/Modal/_private/Overlay";
 
-// If we wanted to make Modal public, we could either:
+// If we wanted to make Modal public outside of core, we could either:
 
 // Move it to a public folder like src/core/components/Modal,
 // and then import it from anywhere:
@@ -130,7 +129,7 @@ npm install @anderjason/eslint-plugin-import-boundary --save-dev
 
 ## Usage
 
-Add `@anderjason/import-boundary`` to the plugins section of your .eslintrc configuration file, and configure the rule under the rules section.
+Add `@anderjason/import-boundary` to the plugins section of your .eslintrc configuration file, and configure the rule under the rules section.
 
 ```javascript
 module.exports = {
