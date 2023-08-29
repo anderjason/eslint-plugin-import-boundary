@@ -24,7 +24,7 @@ src
 │   │   └─── SomePrivateToolbarIcon.tsx
 │       └─── ...
 │   │
-│   └─── __helpers
+│   └─── _helpers
 │       └─── toolbarHelpers.ts
 │       └─── somePrivateHelpers.ts
 │       └─── ...
